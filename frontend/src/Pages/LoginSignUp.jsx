@@ -8,50 +8,82 @@ const LoginSignUp = () => {
     password: "",
     email: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [agree, setAgree] = useState(false);
 
   const changeHandler = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const validateForm = () => {
+    if (state === "Sign Up" && !formData.username.trim()) {
+      alert("Name is required.");
+      return false;
+    }
+    if (!formData.email.trim()) {
+      alert("Email is required.");
+      return false;
+    }
+    if (!formData.password.trim()) {
+      alert("Password is required.");
+      return false;
+    }
+    if (!agree) {
+      alert("You must agree to the terms of use and privacy policy.");
+      return false;
+    }
+    return true;
+  };
+
   const login = async () => {
-    console.log("login function executed", formData);
-    let responseData;
-    await fetch("http://localhost:4000/login", {
-      method: "POST",
-      headers: {
-        Accept: "application/form-data",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((response) => response.json())
-      .then((data) => (responseData = data));
-    if (responseData.success) {
-      localStorage.setItem("auth-token", responseData.token);
-      window.location.replace("/");
-    } else {
-      alert(responseData.errors);
+    if (!validateForm()) return;
+    setIsSubmitting(true);
+    try {
+      const response = await fetch("http://localhost:4000/login", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await response.json();
+      if (data.success) {
+        localStorage.setItem("auth-token", data.token);
+        window.location.replace("/");
+      } else {
+        alert(data.errors || "Login failed.");
+      }
+    } catch (error) {
+      alert("An error occurred during login. Please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   const signup = async () => {
-    console.log("signup function executed", formData);
-    let responseData;
-    await fetch("http://localhost:4000/signup", {
-      method: "POST",
-      headers: {
-        Accept: "application/form-data",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((response) => response.json())
-      .then((data) => (responseData = data));
-    if (responseData.success) {
-      localStorage.setItem("auth-token", responseData.token);
-      window.location.replace("/");
-    } else {
-      alert(responseData.errors);
+    if (!validateForm()) return;
+    setIsSubmitting(true);
+    try {
+      const response = await fetch("http://localhost:4000/signup", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await response.json();
+      if (data.success) {
+        localStorage.setItem("auth-token", data.token);
+        window.location.replace("/");
+      } else {
+        alert(data.errors || "Sign-up failed.");
+      }
+    } catch (error) {
+      alert("An error occurred during sign-up. Please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -60,7 +92,7 @@ const LoginSignUp = () => {
       <div className="login-signup-container">
         <h1>{state}</h1>
         <div className="login-signup-fields">
-          {state === "Sign Up" ? (
+          {state === "Sign Up" && (
             <input
               name="username"
               value={formData.username}
@@ -68,8 +100,6 @@ const LoginSignUp = () => {
               type="text"
               placeholder="Your Name"
             />
-          ) : (
-            <></>
           )}
           <input
             name="email"
@@ -79,7 +109,6 @@ const LoginSignUp = () => {
             placeholder="Your Email"
             required
           />
-
           <input
             name="password"
             value={formData.password}
@@ -93,37 +122,28 @@ const LoginSignUp = () => {
           onClick={() => {
             state === "Login" ? login() : signup();
           }}
+          disabled={isSubmitting}
         >
-          Continue
+          {isSubmitting ? "Processing..." : "Continue"}
         </button>
         {state === "Login" ? (
           <p className="login-signup-login">
-            Create An Account ?
-            <span
-              onClick={() => {
-                setState("Sign Up");
-              }}
-            >
-              {" "}
-              Click Here
-            </span>
+            Create An Account?{" "}
+            <span onClick={() => setState("Sign Up")}>Click Here</span>
           </p>
         ) : (
           <p className="login-signup-login">
-            Already have an Account?{" "}
-            <span
-              onClick={() => {
-                setState("Login");
-              }}
-            >
-              Login Here
-            </span>
+            Already have an account?{" "}
+            <span onClick={() => setState("Login")}>Login Here</span>
           </p>
         )}
-
         <div className="login-signup-agree">
-          <input type="checkbox" name="" id="" />
-          <p>By Continuing, I agree to the terms of use and privacy policy. </p>
+          <input
+            type="checkbox"
+            checked={agree}
+            onChange={() => setAgree(!agree)}
+          />
+          <p>By continuing, I agree to the terms of use and privacy policy.</p>
         </div>
       </div>
     </div>

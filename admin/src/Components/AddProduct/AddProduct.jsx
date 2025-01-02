@@ -18,6 +18,7 @@ const AddProduct = () => {
 
   const changeHandler = (e) => {
     setProductDetails({ ...productDetails, [e.target.name]: e.target.value });
+    console.log(e);
   };
 
   const Add_product = async () => {

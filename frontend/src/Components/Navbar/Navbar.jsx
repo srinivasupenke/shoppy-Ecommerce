@@ -1,15 +1,14 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useRef } from "react";
 import "./Navbar.css";
 import cart_icon from "../Assets/cart_icon.png";
 import nav_logo from "../Assets/logo.png";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import nav_dropdown_icon from "../Assets/nav_dropdown.png";
 import { ShopContext } from "../../Context/ShopContext";
 
 const Navbar = () => {
-  const [menu, setMenu] = useState("shop");
-
   const { getTotalCartItems } = useContext(ShopContext);
+  const location = useLocation();
   const menuRef = useRef();
 
   const dropdown_toggle = (e) => {
@@ -19,10 +18,13 @@ const Navbar = () => {
 
   return (
     <div className="navbar">
-      <div className="nav-logo">
-        <img src={nav_logo} alt="nav-logo" />
-        <p className="nav-name">SHOPPING</p>
-      </div>
+      <Link to="/">
+        <div className="nav-logo">
+          <img src={nav_logo} alt="nav-logo" />
+          <p className="nav-name">SHOPPING</p>
+        </div>
+      </Link>
+
       <img
         className="nav-dropdown"
         onClick={dropdown_toggle}
@@ -31,32 +33,30 @@ const Navbar = () => {
       />
       <ul ref={menuRef} className="nav-menu">
         <li
-          onClick={() => {
-            setMenu("shop");
-          }}
+          className={location.pathname === "/" ? "active" : ""}
+          onClick={() => {}}
         >
-          <Link to="/">Shop</Link> {menu === "shop" ? <hr /> : <></>}
+          <Link to="/">Shop</Link> {location.pathname === "/" ? <hr /> : <></>}
         </li>
         <li
-          onClick={() => {
-            setMenu("mens");
-          }}
+          className={location.pathname === "/mens" ? "active" : ""}
+          onClick={() => {}}
         >
-          <Link to="/mens">Men</Link> {menu === "mens" ? <hr /> : <></>}
+          <Link to="/mens">Men</Link> {location.pathname === "/mens" && <hr />}
         </li>
         <li
-          onClick={() => {
-            setMenu("womens");
-          }}
+          className={location.pathname === "/womens" ? "active" : ""}
+          onClick={() => {}}
         >
-          <Link to="/womens">Women</Link> {menu === "womens" ? <hr /> : <></>}
+          <Link to="/womens">Women</Link>{" "}
+          {location.pathname === "/womens" && <hr />}
         </li>
         <li
-          onClick={() => {
-            setMenu("kids");
-          }}
+          className={location.pathname === "/kids" ? "active" : ""}
+          onClick={() => {}}
         >
-          <Link to="/kids">Kids </Link> {menu === "kids" ? <hr /> : <></>}
+          <Link to="/kids">Kids </Link>{" "}
+          {location.pathname === "/kids" && <hr />}
         </li>
       </ul>
       <div className="nav-login-cart">
