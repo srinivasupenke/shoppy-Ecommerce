@@ -3,9 +3,9 @@ import "./AddProduct.css";
 import upload_area from "../../assets/upload_area.svg";
 
 const AddProduct = () => {
-  const [image, setImgae] = useState(false);
-
   const url = "https://shoppy-ecommerce-backend.onrender.com";
+
+  const [image, setImgae] = useState(false);
 
   const [productDetails, setProductDetails] = useState({
     name: "",
