@@ -11,7 +11,7 @@ const port = process.env.PORT || 4000;
 
 app.use(express.json());
 
-app.use(cors());
+app.use(cors({ origin: "https://shoppy-ecommerce-frontend.onrender.com" }));
 
 //Databse Connection with MongoDB
 
@@ -46,7 +46,7 @@ app.use("/images", express.static(path.join(__dirname, "./upload/images")));
 app.post("/upload", upload.single("product"), (req, res) => {
   res.json({
     success: 1,
-    image_url: `http://localhost:${port}/images/${req.file.filename}`,
+    image_url: `https://your-backend-url/images/${req.file.filename}`,
   });
 });
 
