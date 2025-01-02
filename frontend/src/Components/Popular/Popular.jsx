@@ -6,8 +6,10 @@ import "./Popular.css";
 const Popular = () => {
   const [popularProducts, setPopularProducts] = useState([]);
 
+  const url = "https://shoppy-ecommerce-backend.onrender.com";
+
   useEffect(() => {
-    fetch("http://localhost:4000/popularinwomen")
+    fetch(`${url}/popularinwomen`)
       .then((response) => response.json())
       .then((data) => setPopularProducts(data));
   }, []);

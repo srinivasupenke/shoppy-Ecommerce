@@ -5,8 +5,10 @@ import Item from "../Items/Item";
 const NewCollection = () => {
   const [new_collection, setNew_collection] = useState([]);
 
+  const url = "https://shoppy-ecommerce-backend.onrender.com";
+
   useEffect(() => {
-    fetch("http://localhost:4000/newcollections")
+    fetch(`${url}/newcollections`)
       .then((response) => response.json())
       .then((data) => setNew_collection(data));
   }, []);
