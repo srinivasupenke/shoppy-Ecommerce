@@ -5,8 +5,10 @@ import cross_icon from "../../assets/cross_icon.png";
 const ListProduct = () => {
   const [allproducts, setAllProducts] = useState([]);
 
+  const url = "https://shoppy-ecommerce-backend.onrender.com";
+
   const fetchInfo = async () => {
-    await fetch("http://localhost:4000/allproducts")
+    await fetch(`${url}/allproducts`)
       .then((resq) => resq.json())
       .then((data) => {
         setAllProducts(data);
@@ -18,7 +20,7 @@ const ListProduct = () => {
   }, []);
 
   const remove_product = async (id) => {
-    await fetch("http://localhost:4000/removeproduct", {
+    await fetch(`${url}/removeproduct`, {
       method: "POST",
       headers: {
         Accept: "application/json",

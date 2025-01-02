@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "./CSS/LoginSignUp.css";
 
 const LoginSignUp = () => {
+  const url = "https://shoppy-ecommerce-backend.onrender.com";
+
   const [state, setState] = useState("Login");
   const [formData, setFormData] = useState({
     username: "",
@@ -39,7 +41,7 @@ const LoginSignUp = () => {
     if (!validateForm()) return;
     setIsSubmitting(true);
     try {
-      const response = await fetch("http://localhost:4000/login", {
+      const response = await fetch(`${url}/login`, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -65,7 +67,7 @@ const LoginSignUp = () => {
     if (!validateForm()) return;
     setIsSubmitting(true);
     try {
-      const response = await fetch("http://localhost:4000/signup", {
+      const response = await fetch(`${url}/signup`, {
         method: "POST",
         headers: {
           Accept: "application/json",

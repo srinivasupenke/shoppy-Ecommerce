@@ -15,9 +15,11 @@ const ShopContextProvider = (props) => {
   const [cartItems, setCartItems] = useState(getDefaultCart());
   const [loading, setLoading] = useState(false); // Loader state
 
+  const url = "https://shoppy-ecommerce-backend.onrender.com";
+
   useEffect(() => {
     setLoading(true); // Start loader
-    fetch("http://localhost:4000/allproducts")
+    fetch(`${url}/allproducts`)
       .then((response) => response.json())
       .then((data) => setAll_Products(data))
       .catch((error) => console.error("Error fetching products:", error))
@@ -25,7 +27,7 @@ const ShopContextProvider = (props) => {
 
     if (localStorage.getItem("auth-token")) {
       setLoading(true); // Start loader for cart fetch
-      fetch("http://localhost:4000/getcart", {
+      fetch(`${url}/getcart`, {
         method: "POST",
         headers: {
           Accept: "application/form-data",
@@ -48,7 +50,7 @@ const ShopContextProvider = (props) => {
     }
 
     setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
-    fetch("http://localhost:4000/addtocart", {
+    fetch(`${url}/addtocart`, {
       method: "POST",
       headers: {
         Accept: "application/form-data",
@@ -69,7 +71,7 @@ const ShopContextProvider = (props) => {
     }
 
     setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
-    fetch("http://localhost:4000/removefromcart", {
+    fetch(`${url}/removefromcart`, {
       method: "POST",
       headers: {
         Accept: "application/form-data",

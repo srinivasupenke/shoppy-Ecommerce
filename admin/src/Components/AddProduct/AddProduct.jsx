@@ -4,6 +4,9 @@ import upload_area from "../../assets/upload_area.svg";
 
 const AddProduct = () => {
   const [image, setImgae] = useState(false);
+
+  const url = "https://shoppy-ecommerce-backend.onrender.com";
+
   const [productDetails, setProductDetails] = useState({
     name: "",
     image: "",
@@ -30,7 +33,7 @@ const AddProduct = () => {
 
     formData.append("product", image);
 
-    await fetch("http://localhost:4000/upload", {
+    await fetch(`${url}/upload`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -45,7 +48,7 @@ const AddProduct = () => {
     if (responseData.success) {
       product.image = responseData.image_url;
       console.log(product);
-      await fetch("http://localhost:4000/addproduct", {
+      await fetch(`${url}/addproduct`, {
         method: "POST",
         headers: {
           Accept: "application/json",
