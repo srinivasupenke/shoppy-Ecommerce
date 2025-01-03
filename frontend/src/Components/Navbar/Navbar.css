@@ -13,15 +13,17 @@
   gap: 10px;
   cursor: pointer;
   justify-content: center;
-  text-decoration: none;
+ 
 }
 .nav-logo p {
   font-size: 32px;
   color: #171717;
   font-weight: 600;
   cursor: pointer;
-  text-decoration: none;
+  
 }
+.nav-name {
+  text-decoration : none;
 
 .nav-menu {
   display: flex;
