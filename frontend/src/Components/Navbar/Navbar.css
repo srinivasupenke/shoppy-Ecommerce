@@ -39,6 +39,7 @@
   gap: 3px;
   cursor: pointer;
   color: #626262;
+   text-decoration: none;
 }
 
 .nav-menu hr {
