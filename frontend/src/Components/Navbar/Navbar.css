@@ -19,6 +19,7 @@
   color: #171717;
   font-weight: 600;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .nav-menu {
@@ -39,7 +40,7 @@
   gap: 3px;
   cursor: pointer;
   color: #626262;
-   text-decoration: none;
+  text-decoration: none;
 }
 
 .nav-menu hr {
@@ -50,11 +51,6 @@
   background-color: #ff4141;
 }
 
-
-.nav-menu a {
-  text-decoration: none;
-  color: inherit;
-}
 
 .nav-login-cart {
   display: flex;
