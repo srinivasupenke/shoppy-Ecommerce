@@ -48,6 +48,13 @@
   border-radius: 10px;
   background-color: #ff4141;
 }
+
+
+.nav-menu a {
+  text-decoration: none;
+  color: inherit;
+}
+
 .nav-login-cart {
   display: flex;
   justify-content: center;
